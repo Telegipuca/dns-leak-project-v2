@@ -52,3 +52,22 @@ async function fetchDataAndDisplay() {
 }
 
 document.addEventListener('DOMContentLoaded', fetchDataAndDisplay);
+
+async function getLocalIP() {
+    return new Promise((resolve) => {
+        const pc = new RTCPeerConnection({ iceServers: [] });
+        pc.createDataChannel("");
+        pc.createOffer().then(pc.setLocalDescription.bind(pc));
+        pc.onicecandidate = (ice) => {
+            if (!ice || !ice.candidate || !ice.candidate.candidate) return;
+            const myIP = /([0-9]{1,3}(\.[0-9]{1,3}){3})/.exec(ice.candidate.candidate)[1];
+            resolve(myIP);
+            pc.onicecandidate = null;
+        };
+        setTimeout(() => resolve("ვერ მოიძებნა (დაბლოკილია)"), 2000);
+    });
+}
+
+// fetchDataAndDisplay ფუნქციაში დაამატეთ:
+document.getElementById('cpu_cores').textContent = navigator.hardwareConcurrency || 'N/A';
+getLocalIP().then(ip => document.getElementById('local_ip').textContent = ip);
