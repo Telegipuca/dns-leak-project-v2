@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP & Fingerprint Leak Tester</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f4f9; color: #333; }
+        .container { max-width: 1200px; margin: auto; display: flex; gap: 30px; }
+        .current-data, .history-log { flex: 1; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        h1 { color: #007bff; text-align: center; }
+        h3 { border-bottom: 2px solid #eee; padding-bottom: 5px; margin-top: 20px; color: #007bff; }
+        p strong { color: #555; }
+        .history-item { border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; border-radius: 5px; background: #fafafa; font-size: 0.9em; }
+        .mismatch { color: red; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>🌐 IP, DNS, & Fingerprint Leak Test</h1>
+    <div class="container">
+        <div class="current-data">
+            <h2>მიმდინარე მონაცემები</h2>
+            <p><strong>IP მისამართი:</strong> <span id="public_ip">იტვირთება...</span></p>
+            <p><strong>გეოლოკაცია:</strong> <span id="geolocation">იტვირთება...</span></p>
+            <h3>ბრაუზერის ფინგერპრინტი:</h3>
+            <p><strong>User Agent:</strong> <span id="user_agent"></span></p>
+            <p><strong>რეზოლუცია:</strong> <span id="resolution"></span></p>
+            <p><strong>ენა:</strong> <span id="language"></span></p>
+            <p><strong>დროის სარტყელი:</strong> <span id="timezone"></span></p>
+            <p><strong>კანვასის ჰეში:</strong> <span id="canvas_hash"></span></p>
+        </div>
+
+        <div class="history-log">
+            <div id="history_log">
+                <h2>ჩანაწერების ისტორია</h2>
+                <p>აქ გამოჩნდება თქვენი წინა ვიზიტები.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="dns-test-section current-data" style="margin-top: 20px;">
+        <h2>DNS Leak Test (მომზადება)</h2>
+        <p>DNS ტესტის შედეგი გამოჩნდება აქ, როგორც კი ფუნქციას დავამატებთ.</p>
+        <div id="dns_results"></div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
