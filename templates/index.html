@@ -3,45 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IP & Fingerprint Leak Tester</title>
+    <title>IP, DNS & Fingerprint Leak Test</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f4f9; color: #333; }
-        .container { max-width: 1200px; margin: auto; display: flex; gap: 30px; }
-        .current-data, .history-log { flex: 1; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        h1 { color: #007bff; text-align: center; }
-        h3 { border-bottom: 2px solid #eee; padding-bottom: 5px; margin-top: 20px; color: #007bff; }
-        p strong { color: #555; }
-        .history-item { border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; border-radius: 5px; background: #fafafa; font-size: 0.9em; }
-        .mismatch { color: red; font-weight: bold; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1 {
+            grid-column: 1 / -1;
+            text-align: center;
+            color: #1a73e8;
+        }
+        h2 {
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+            font-size: 1.2rem;
+            color: #555;
+        }
+        .data-item {
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #fafafa;
+            padding-bottom: 5px;
+        }
+        .label { font-weight: bold; color: #777; }
+        .value { color: #222; word-break: break-all; text-align: right; margin-left: 10px; }
+        
+        .dns-section {
+            grid-column: 1 / -1;
+            background: #e8f0fe;
+            border-left: 5px solid #1a73e8;
+        }
+        .history-item {
+            background: #f8f9fa;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+        }
+        #canvas_hash { font-size: 0.7rem; color: #999; }
+        
+        @media (max-width: 768px) {
+            .container { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
-    <h1>🌐 IP, DNS, & Fingerprint Leak Test</h1>
-    <div class="container">
-        <div class="current-data">
-            <h2>მიმდინარე მონაცემები</h2>
-            <p><strong>IP მისამართი:</strong> <span id="public_ip">იტვირთება...</span></p>
-            <p><strong>გეოლოკაცია:</strong> <span id="geolocation">იტვირთება...</span></p>
-            <h3>ბრაუზერის ფინგერპრინტი:</h3>
-            <p><strong>User Agent:</strong> <span id="user_agent"></span></p>
-            <p><strong>რეზოლუცია:</strong> <span id="resolution"></span></p>
-            <p><strong>ენა:</strong> <span id="language"></span></p>
-            <p><strong>დროის სარტყელი:</strong> <span id="timezone"></span></p>
-            <p><strong>კანვასის ჰეში:</strong> <span id="canvas_hash"></span></p>
-        </div>
 
-        <div class="history-log">
-            <div id="history_log">
-                <h2>ჩანაწერების ისტორია</h2>
-                <p>აქ გამოჩნდება თქვენი წინა ვიზიტები.</p>
+    <h1>🌐 IP & Hardware Fingerprint Scanner</h1>
+
+    <div class="container">
+        <div class="card">
+            <h2>📍 ქსელური კავშირი</h2>
+            <div class="data-item">
+                <span class="label">საჯარო IP:</span>
+                <span id="public_ip" class="value">იტვირთება...</span>
+            </div>
+            <div class="data-item">
+                <span class="label">შიდა IP (WebRTC):</span>
+                <span id="local_ip" class="value">ძიება...</span>
+            </div>
+            <div class="data-item">
+                <span class="label">გეოლოკაცია:</span>
+                <span id="geolocation" class="value">იტვირთება...</span>
+            </div>
+
+            <h2>💻 აპარატურა & OS</h2>
+            <div class="data-item">
+                <span class="label">პროცესორის ბირთვები:</span>
+                <span id="cpu_cores" class="value"></span>
+            </div>
+            <div class="data-item">
+                <span class="label">ოპერატიული (RAM):</span>
+                <span id="ram" class="value"></span>
+            </div>
+            <div class="data-item">
+                <span class="label">ელემენტის სტატუსი:</span>
+                <span id="battery" class="value"></span>
+            </div>
+            <div class="data-item">
+                <span class="label">ეკრანის რეზოლუცია:</span>
+                <span id="resolution" class="value"></span>
+            </div>
+            <div class="data-item">
+                <span class="label">მუქი თემა:</span>
+                <span id="dark_mode" class="value"></span>
+            </div>
+            <div class="data-item">
+                <span class="label">კანვასის ჰეში:</span>
+                <span id="canvas_hash" class="value"></span>
             </div>
         </div>
-    </div>
-    
-    <div class="dns-test-section current-data" style="margin-top: 20px;">
-        <h2>DNS Leak Test (მომზადება)</h2>
-        <p>DNS ტესტის შედეგი გამოჩნდება აქ, როგორც კი ფუნქციას დავამატებთ.</p>
-        <div id="dns_results"></div>
+
+        <div class="card">
+            <h2>📜 ბოლო ვიზიტების ისტორია</h2>
+            <div id="history_log">
+                <p style="color: #999;">ისტორია იტვირთება ბაზიდან...</p>
+            </div>
+        </div>
+
+        <div class="card dns-section">
+            <h2>🛡️ DNS Leak Test</h2>
+            <div id="dns_results">
+                ტესტირება მიმდინარეობს...
+            </div>
+            <p style="font-size: 0.8rem; margin-top: 10px; color: #666;">
+                შენიშვნა: თუ ზემოთ მოცემული IP ემთხვევა თქვენი ინტერნეტ პროვაიდერის IP-ს VPN-ის გამოყენებისას, ეს ნიშნავს, რომ გაქვთ DNS გაჟონვა.
+            </p>
+        </div>
     </div>
 
     <script src="/static/app.js"></script>
