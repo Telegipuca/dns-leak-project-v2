@@ -1,6 +1,8 @@
+<!DOCTYPE html>
+<html lang="ka">
 <head>
     <meta charset="UTF-8">
-    <title>Advanced Leak & Fingerprint Test</title>
+    <title>Advanced System Dossier</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
@@ -8,24 +10,22 @@
     <div class="container">
         <div class="card" id="main_display">
             <h2 id="display_title">📍 მიმდინარე ვიზიტი</h2>
-            <div id="data_fields">
-                <div class="data-item"><span class="label">საჯარო IP:</span> <span id="public_ip" class="value"></span></div>
-                <div class="data-item"><span class="label">გეოლოკაცია:</span> <span id="geolocation" class="value"></span></div>
-                <div class="data-item"><span class="label">პროცესორის ბირთვები:</span> <span id="cpu_cores" class="value"></span></div>
-                <div class="data-item"><span class="label">ოპერატიული (RAM):</span> <span id="ram" class="value"></span></div>
-                <div class="data-item"><span class="label">ელემენტი:</span> <span id="battery" class="value"></span></div>
-                <div class="data-item"><span class="label">მუქი თემა:</span> <span id="dark_mode" class="value"></span></div>
-                <div class="data-item"><span class="label">Audio Hash:</span> <span id="audio_hash" class="value"></span></div>
-                <div class="data-item"><span class="label">კანვასის ჰეში:</span> <span id="canvas_hash" class="value"></span></div>
-            </div>
-            <button onclick="location.reload()" style="margin-top:20px; padding:10px; cursor:pointer;">ახალი ტესტი (Reset)</button>
+            <div class="data-item"><span class="label">System ID:</span> <span id="system_id" class="value" style="font-size:0.8rem; color:blue"></span></div>
+            <div class="data-item"><span class="label">საჯარო IP:</span> <span id="public_ip" class="value"></span></div>
+            <div class="data-item"><span class="label">გეოლოკაცია:</span> <span id="geolocation" class="value"></span></div>
+            <div class="data-item"><span class="label">ბირთვები:</span> <span id="cpu_cores" class="value"></span></div>
+            <div class="data-item"><span class="label">RAM:</span> <span id="ram" class="value"></span></div>
+            <div class="data-item"><span class="label">ელემენტი:</span> <span id="battery" class="value"></span></div>
+            <div class="data-item"><span class="label">რეზოლუცია:</span> <span id="resolution" class="value"></span></div>
+            <div class="data-item"><span class="label">მუქი თემა:</span> <span id="dark_mode" class="value"></span></div>
+            <div class="data-item"><span class="label">Audio Hash:</span> <span id="audio_hash" class="value"></span></div>
+            <div class="data-item"><span class="label">Canvas Hash:</span> <span id="canvas_hash" class="value"></span></div>
+            <button onclick="location.reload()" style="margin-top:15px;">Refresh</button>
         </div>
 
         <div class="card">
-            <h2>📜 ვიზიტების ისტორია (ბოლო 50)</h2>
-            <div id="history_log" class="history-list">
-                <p>ბაზასთან კავშირი...</p>
-            </div>
+            <h2>📜 ისტორია (ბოლო 50)</h2>
+            <div id="history_log" class="history-list">იტვირთება...</div>
         </div>
 
         <div class="card dns-section">
@@ -35,3 +35,4 @@
     </div>
     <script src="/static/app.js"></script>
 </body>
+</html>

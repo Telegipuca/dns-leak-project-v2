@@ -5,9 +5,9 @@ from supabase import create_client, Client
 
 app = Flask(__name__)
 
-# Supabase კონფიგურაცია
+# Supabase კონფიგურაცია - ჩაწერეთ თქვენი მონაცემები
 SUPABASE_URL = "https://dtuvcmjbcrlzhoplaxmj.supabase.co"
-SUPABASE_KEY = "sb_secret_sbJ0YYAr0_Zml1cOFtUJ9w_3pdB0gYE" # anon key
+SUPABASE_KEY = "sb_secret_sbJ0YYAr0_Zml1cOFtUJ9w_3pdB0gYE"
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 def get_clean_ip():
@@ -31,24 +31,24 @@ def get_data():
     log_entry = {
         "timestamp": data.get('timestamp'),
         "public_ip": client_ip,
-        "local_ip": data.get('local_ip'),
         "country": geo_data.get('country', 'N/A'),
         "isp": geo_data.get('isp', 'N/A'),
-        "user_agent": data.get('user_agent'),
+        "cpu_cores": int(data.get('cpu_cores', 0)),
+        "ram": data.get('ram'),
+        "battery": data.get('battery'),
         "resolution": data.get('resolution'),
+        "dark_mode": data.get('dark_mode'),
         "canvas_hash": data.get('canvas_hash'),
-        "cpu_cores": int(data.get('cpu_cores', 0))
+        "audio_hash": data.get('audio_hash'),
+        "system_id": data.get('system_id')
     }
     
-    # მონაცემების შენახვა Supabase-ში
     try:
         supabase.table("visitor_logs").insert(log_entry).execute()
     except Exception as e:
         print(f"Supabase Error: {e}")
 
-    # ისტორიის წამოღება (ბოლო 10)
-    history = supabase.table("visitor_logs").select("*").order("id", desc=True).limit(100).execute()
-    
+    history = supabase.table("visitor_logs").select("*").order("id", desc=True).limit(50).execute()
     return jsonify({'current_visit': log_entry, 'history': history.data})
 
 if __name__ == '__main__':
