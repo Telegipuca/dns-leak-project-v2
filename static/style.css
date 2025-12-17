@@ -1,0 +1,65 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f4f7f9;
+    color: #333;
+    margin: 0; padding: 20px;
+}
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+}
+
+h1 { grid-column: 1 / -1; text-align: center; color: #1a73e8; }
+
+.data-item {
+    display: flex; justify-content: space-between;
+    padding: 10px 0; border-bottom: 1px solid #f0f0f0;
+}
+
+.label { font-weight: 600; color: #666; }
+.value { font-weight: 500; color: #111; text-align: right; }
+
+/* ისტორიის სტილები */
+.history-list { max-height: 500px; overflow-y: auto; }
+
+.history-item {
+    background: #fff;
+    border: 1px solid #eee;
+    padding: 12px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.history-item:hover {
+    background: #eef2f7;
+    border-color: #1a73e8;
+    transform: translateX(5px);
+}
+
+.history-item strong { display: block; color: #1a73e8; font-size: 0.9rem; }
+.history-item small { color: #888; }
+
+/* არქივის ინდიკატორი */
+.archive-active {
+    border: 2px solid #f4b400 !important;
+    background: #fffdf7 !important;
+}
+
+.dns-section {
+    grid-column: 1 / -1;
+    background: #e8f0fe;
+    border-left: 6px solid #1a73e8;
+}

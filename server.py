@@ -47,7 +47,7 @@ def get_data():
         print(f"Supabase Error: {e}")
 
     # ისტორიის წამოღება (ბოლო 10)
-    history = supabase.table("visitor_logs").select("*").order("id", desc=True).limit(10).execute()
+    history = supabase.table("visitor_logs").select("*").order("id", desc=True).limit(100).execute()
     
     return jsonify({'current_visit': log_entry, 'history': history.data})
 
